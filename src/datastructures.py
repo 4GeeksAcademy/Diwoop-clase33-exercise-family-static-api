@@ -1,4 +1,3 @@
-
 """
 update this file to implement the following already declared methods:
 - add_member: Should add a member to the self._members list
@@ -13,7 +12,7 @@ class FamilyStructure:
         self.last_name = last_name
         self._next_id = 1
         self._members = []
-    # read-only: Use this method to generate random members ID's when adding members into the list
+        
     def _generateId(self):
         generated_id = self._next_id
         self._next_id += 1
@@ -24,23 +23,27 @@ class FamilyStructure:
         member["id"] = self._generateId()
         member["lucky_numbers"] = list(member.get("lucky_numbers", set()))
         self._members.append(member)
-
         return member
 
     def delete_member(self, id):
         for position in range(len(self._members)):
             if self._members[position]["id"] == id:
-                self._members.pop(position)
-                
-                return None
+                return self._members.pop(position)
+        return None
 
     def get_member(self, id):
-        for position in range(len(self._members)):
-            if self._members[position]["id"] == id:
-                self._members.pop(position)
-                
-                return None
+        for member in self._members:
+            if member["id"] == id:
+                return member
+        return None
 
-    # this method is done, it returns a list with all the family members
+    def update_member(self, id, updated_data):
+        member = self.get_member(id)
+        if member:
+            member.update(updated_data)
+            return member 
+        return None 
+
+
     def get_all_members(self):
         return self._members
